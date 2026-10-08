@@ -167,13 +167,16 @@ window.contactProductOnLine = async (card, contact, product) => {
   }
   if (forestCaptureInProgress) return;
 
+  const lineMessage = `สนใจสินค้า: ${product.title}\nรูปสินค้า: ${product.image}`;
+  const lineUrl = `https://line.me/R/oaMessage/%40634lfegy/?${encodeURIComponent(lineMessage)}`;
+
   try {
     await window.carryProductToContact(card, contact);
     await new Promise((resolve) => window.setTimeout(resolve, 900));
-    window.showContactOptions(product);
+    window.location.assign(lineUrl);
   } catch (error) {
-    console.error("เปิดช่องทางติดต่อเพื่อสอบถามสินค้าไม่สำเร็จ", error);
-    window.alert("เปิดช่องทางติดต่อไม่สำเร็จ กรุณาลองกดสอบถามสินค้าอีกครั้ง");
+    console.error("เปิดแชต LINE เพื่อสอบถามสินค้าไม่สำเร็จ", error);
+    window.alert("เปิดแชต LINE ไม่สำเร็จ กรุณาลองกดสอบถามสินค้าอีกครั้ง");
   }
 };
 
